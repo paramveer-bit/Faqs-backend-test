@@ -4,6 +4,8 @@ import SendMail from '../helper/sendmail';
 import { Request, Response } from 'express';
 import User from '../models/user';
 import jwt from "jsonwebtoken"
+import bcrypt from "bcrypt"
+
 
 
 
@@ -26,9 +28,11 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
     // save otp and user in database
     const otpExpires = new Date()
     otpExpires.setMinutes(otpExpires.getMinutes() + 10)
+
+    const newpassword = await bcrypt.hash(password, 10)
     const newUser = new User({
         email: email,
-        password: password,
+        password: newpassword,
         otp: otp,
         otpExpires: otpExpires
     })
@@ -85,7 +89,9 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
         throw new ApiError(400, "User not verified")
     }
 
-    if (user.password !== password) {
+    const isMatch = await bcrypt.compare(password, user.password)
+
+    if (isMatch === false) {
         throw new ApiError(400, "Invalid Password")
     }
 
