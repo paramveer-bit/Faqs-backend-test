@@ -16,7 +16,7 @@ export default async function sendVerificationMail(
         // console.log(process.env.EMAIL)
         // console.log(process.env.PASSWORD)
         const res = await MailHelper({
-            from: 'onboarding@resend.dev',
+            from: 'coderbuddy01@gmail.com',
             to: email,
             subject: 'Silent  Whispers verification code',
             html: EmailTemplate({ username, code: verificationCode }),
@@ -25,6 +25,7 @@ export default async function sendVerificationMail(
         console.log(res)
         return { success: true, message: "Verification email sent successfully" }
     } catch (error) {
+        console.log(error)
         return { success: false, message: "Error in sending verification email" }
     }
 }
