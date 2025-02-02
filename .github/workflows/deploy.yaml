@@ -37,6 +37,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             sudo docker pull paramveer01/faqbackend:latest
-            sudo docker stop web-app || true
-            sudo docker rm web-app || true
-            sudo docker run -e PORT=${{ secrets.PORT}} -e MONGODB_URI=${{ secrets.MONGODB_URI }} -e EMAIL=${{ secrets.EMAIL}} -e PASSWORD=${{ secrets.PASSWORD }} -e JWT_SECRET=${{ secrets.JWT_SECRET }} -d --name web-app -p 2700:2700 paramveer01/faqbackend:latest
+            sudo docker stop app-in || true
+            sudo docker rm app-in || true
+            sudo docker run -e PORT=${{ secrets.PORT}} -e MONGODB_URI=${{ secrets.MONGODB_URI }} -e EMAIL=${{ secrets.EMAIL}} -e PASSWORD=${{ secrets.PASSWORD }} -e JWT_SECRET=${{ secrets.JWT_SECRET }} -d --name app-in -p 2700:2700 paramveer01/faqbackend:latest
